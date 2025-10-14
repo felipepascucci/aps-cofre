@@ -1,0 +1,348 @@
+/* Variáveis CSS para cores - facilita a manutenção */
+:root {
+    --bg-dark: #1a1a2e; /* Fundo muito escuro */
+    --bg-medium: #1f4068; /* Fundo de componentes */
+    --bg-light: #2c547a; /* Fundo de input/hover */
+    --text-light: #e0e0e0; /* Texto claro */
+    --accent-color: #e43f5a; /* Cor de destaque (vermelho-magenta) */
+    --success-color: #3cb371; /* Verde para sucesso */
+    --denied-color: #ff6347; /* Laranja-avermelhado para negado */
+    --checking-color: #ffbd69; /* Amarelo para verificando */
+    --button-primary: #507dbc; /* Azul para botões */
+    --shadow-dark: rgba(0, 0, 0, 0.4); /* Sombra escura */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ocupa a altura total da tela */
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-dark); /* Fundo escuro */
+    color: var(--text-light); /* Texto claro */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+h1 {
+    color: var(--accent-color); /* Título em cor de destaque */
+    margin-bottom: 30px;
+    font-size: 2.8em;
+    text-shadow: 2px 2px 5px var(--shadow-dark);
+}
+
+/* Estilo para containers/cartões que envolvem formulários ou vídeos */
+.card-container {
+    background-color: var(--bg-medium);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px var(--shadow-dark);
+    text-align: center;
+    max-width: 680px; /* Largura máxima para centralizar */
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* Estilo para o container do vídeo */
+.video-container {
+    position: relative;
+    border: 5px solid var(--accent-color); /* Borda de destaque */
+    border-radius: 10px;
+    overflow: hidden; /* Garante que o vídeo não saia da borda arredondada */
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px var(--shadow-dark);
+}
+
+video {
+    display: block;    /* Remove espaços extras embaixo do vídeo */
+    width: 100%;       /* Faz o vídeo ocupar 100% da largura do seu container */
+    height: auto;      /* A altura se ajusta automaticamente para manter a proporção */
+    border-radius: 5px; /* Leve arredondamento para suavizar as bordas internas */
+}
+
+/* Estilos para os blocos de status */
+.status {
+    margin-top: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    min-height: 50px;
+    padding: 10px 25px;
+    border-radius: 12px;
+    text-align: center;
+    transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    box-shadow: 0 2px 8px var(--shadow-dark);
+}
+.status-checking { color: var(--bg-dark); background-color: var(--checking-color); }
+.status-allowed, .status-success { color: var(--bg-dark); background-color: var(--success-color); }
+.status-denied, .status-error { color: var(--text-light); background-color: var(--denied-color); }
+
+/* Estilos para formulários (login e cadastro) */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Mais espaço entre os elementos do formulário */
+    text-align: left;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"],
+select {
+    padding: 12px;
+    border: 1px solid var(--bg-light);
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(228, 63, 90, 0.3); /* Sombra de foco com cor de destaque */
+}
+
+input[type="file"] {
+    padding: 10px; /* Menor padding para input file */
+}
+/* Estilo para o placeholder */
+input::placeholder {
+    color: rgba(224, 224, 224, 0.7);
+}
+
+/* Botões */
+button {
+    padding: 12px 25px;
+    background-color: var(--button-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px var(--shadow-dark);
+}
+
+button:hover {
+    background-color: var(--accent-color); /* Cor de destaque ao passar o mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-dark);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px var(--shadow-dark);
+}
+
+/* Erros de login/validação */
+p {
+    color: var(--denied-color);
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- NOVOS ESTILOS PARA OS OVERLAYS DE FEEDBACK (✓ e X) --- */
+
+.card-container {
+    position: relative; /* Essencial para o posicionamento do overlay */
+}
+
+/* Base para ambos os overlays */
+.feedback-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Cor de fundo para cada tipo de overlay */
+.feedback-overlay.success {
+    background-color: rgba(60, 179, 113, 0.4); /* Verde semi-transparente */
+}
+.feedback-overlay.denied {
+    background-color: rgba(255, 99, 71, 0.4); /* Vermelho semi-transparente */
+}
+
+/* Animação de fade-in (já deve existir, mas garantimos aqui) */
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Container do ícone, para dar um fundo sólido e mais destaque */
+.icon-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.5);
+    opacity: 0;
+    animation: icon-pop 0.5s ease-out 0.2s forwards;
+}
+.icon-container.success {
+    background-color: var(--success-color);
+}
+.icon-container.denied {
+    background-color: var(--denied-color);
+}
+
+@keyframes icon-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Estilos para os SVGs dos ícones */
+.icon-svg {
+    width: 100px;
+    height: 100px;
+    stroke: white; /* Cor da linha */
+    stroke-width: 6; /* Linha mais grossa */
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    fill: none;
+}
+
+/* Animação de desenho para as linhas dos ícones */
+.icon-svg .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 0.8s ease-out 0.6s forwards;
+}
+
+@keyframes draw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* --- NOVOS ESTILOS PARA O BOTÃO DE UPLOAD --- */
+
+/* Este é o nosso 'botão falso', que na verdade é um label */
+.custom-file-upload {
+    display: inline-block; /* Permite definir padding e outras propriedades de bloco */
+    padding: 12px 25px;
+    background-color: var(--button-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px var(--shadow-dark);
+    text-align: center;
+}
+
+.custom-file-upload:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-dark);
+}
+
+/* Um container para o botão e o nome do arquivo */
+.file-input-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o botão e o nome do arquivo */
+}
+
+/* Estilo para o texto que mostra o nome do arquivo selecionado */
+.file-name-display {
+    color: var(--text-light);
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* --- NOVO ESTILO PARA O BOTÃO DE REMOVER ARQUIVO --- */
+.remove-file-btn {
+    background-color: var(--denied-color); /* Usa a cor de 'negado' para o 'X' */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Deixa o botão redondo */
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 30px; /* Alinha o 'X' verticalmente */
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.remove-file-btn:hover {
+    background-color: #c82333; /* Um vermelho mais escuro no hover */
+    transform: scale(1.1);
+}
+
+/* --- NOVOS ESTILOS PARA O MODAL DA CÂMERA --- */
+
+.camera-icon-btn {
+    background-color: transparent;
+    border: 2px solid var(--button-primary);
+    color: var(--button-primary);
+    border-radius: 50%;
+    width: 46px; /* Tamanho do botão */
+    height: 46px;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+.camera-icon-btn:hover {
+    background-color: var(--button-primary);
+    color: white;
+}
+.camera-icon-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Fundo do modal que cobre a tela inteira */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* A janela do modal em si */
+.modal-content {
+    background-color: var(--bg-medium);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
