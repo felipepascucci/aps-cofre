@@ -1,5 +1,7 @@
-from fastapi import FastAPI, Depends, UploadFile, File, HTTPException
+import logging
+from fastapi import FastAPI, Depends, UploadFile, File, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from . import crud, models
 from .database import engine, get_db
@@ -27,6 +29,14 @@ app.add_middleware(
 # Inclui as rotas definidas no arquivo users.py
 app.include_router(users.router)
 
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logging.error(f"Erro inesperado na requisição {request.url}: {exc}", exc_info=True)
+    
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Ocorreu um erro interno inesperado no servidor. Tente novamente mais tarde."},
+    )
 
 @app.get("/")
 def read_root():
