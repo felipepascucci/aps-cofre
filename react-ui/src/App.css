@@ -1,6 +1,6 @@
 /* Variáveis CSS para cores - facilita a manutenção */
 :root {
-    --bg-dark: #1a1a2e; /* Fundo muito escuro */
+    --bg-dark: #f3f6fb; /* Fundo muito escuro */
     --bg-medium: #1f4068; /* Fundo de componentes */
     --bg-light: #2c547a; /* Fundo de input/hover */
     --text-light: #e0e0e0; /* Texto claro */
