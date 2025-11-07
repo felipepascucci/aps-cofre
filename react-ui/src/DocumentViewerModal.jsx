@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Modal from 'react-modal';
 import {X} from 'lucide-react';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -19,12 +19,13 @@ const modalStyle = {
         bottom: 'auto', 
         marginRight: '-50%', 
         transform: 'translate(-50%, -50%)', 
-        width: '80vw', 
+        width: '50vw', 
         height: '80vh', 
         padding: '0',
         display: 'flex',
         flexDirection: 'column',
-        position: 'relative'
+        position: 'relative',
+        boxSizing: 'border-box'
     },
     overlay: { 
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -34,6 +35,16 @@ const modalStyle = {
 
 function DocumentViewerModal({ isOpen, onClose, document }) {
     const [numPages, setNumPages] = useState(null);
+    const [containerWidth, setContainerWidth] = useState(null); 
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        if (isOpen && containerRef.current) {
+            // Ajuste a largura, subtraindo um pouco das margens (ex: 20px)
+            setContainerWidth(containerRef.current.clientWidth - 20); 
+        }
+    }, [isOpen]);
+    
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
@@ -44,8 +55,7 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
             pageNumber={pageIndex + 1} 
             renderAnnotationLayer={true}
             renderTextLayer={true}
-            // Propriedade para garantir que a página se ajuste à largura do container
-            width={700} // Valor fixo recomendado, ajuste se necessário
+            width={containerWidth || 800}
         />
     );
     
@@ -78,12 +88,15 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
                     </button>
 
                     {document ? (
-                      <div style={{ flexGrow: 1, overflowY: 'auto', paddingTop: '50px' }}> 
+                      <div 
+                      ref={containerRef}
+                      style={{ flexGrow: 1, overflowY: 'auto', paddingTop: '0px',paddingBottom:'50%',justifyContent:'center', display:'flex' ,width:'100%' }}> 
                        <Document
                         file={document.uri}
                         onLoadSuccess={onDocumentLoadSuccess}
                         loading="Carregando PDF..."
                         noData="Nenhum arquivo PDF encontrado."
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin:0, padding:0 }}
                     >
                        {Array.from(new Array(numPages), (el, index) => (
                         renderPage(index) 
@@ -91,22 +104,7 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
                     </Document>
                 </div>
             ) : null}
-            numPages && (
-                    <p style={{ 
-                        textAlign: 'center', 
-                        padding: '10px', 
-                        color: '#555', 
-                        borderTop: '1px solid #eee',
-                        position: 'absolute', // Define a posição em relação ao modal
-                        bottom: '0',        // Fica na parte inferior
-                        left: '0',
-                        right: '0',
-                        background: '#fff', // Fundo branco para garantir visibilidade
-                        zIndex: 9000
-                    }}>
-                        Visualizando {numPages} paginas
-                    </p>
-                )}
+         }
         </Modal>
     );
 }
