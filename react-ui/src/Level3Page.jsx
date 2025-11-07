@@ -74,23 +74,23 @@ function Level3Page() {
           <FaFolder style={{ marginRight: '8px', color: '#1e2a44' }} />
           Documentos Confidenciais</h3>
           <ul style= {{listStyleType:'none', paddingLeft:'0' }}>
-            <li style={listItemStyle}>📄Relatório Financeiro Q3-2025.pdf
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Estratégia de Expansão Global.docx
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Contrato de Parceria Secreta.pdf
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Memo - Reunião do Conselho (15/10).txt
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
+               {DOCUMENTS.map((doc, index) => (
+                   <li key={index} style={listItemStyle}>
+                   <span>📄{doc.nome}</span>
+            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}
+            onClick={() => handleView(doc)}
+            title={`Visualizar ${doc.nome}`}
+            />
             </li>
           </ul>
           <p style={{ fontSize: '0.8em', color: '#c62828' }}>⚠️Atenção: O compartilhamento destes documentos com terceiros é estritamente proibido.</p>
       </div>
       )}
-   
+      <DocumentViewerModal
+          isOpen={modalIsOpen}
+          onClose={handleClose}
+          document={docToView}
+      />
       <Link to="/" style={{ color: 'var(--text-light)', marginTop: '30px', display: 'inline-block', color: '#666'}}>
       <MdArrowBack style={{ marginRight: '5px' }} />
         Voltar para a Câmera

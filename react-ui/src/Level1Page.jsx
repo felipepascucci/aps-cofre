@@ -65,14 +65,29 @@ function Level1Page() {
                 padding: '20px',
                 textAlign: 'left'
           }}>
-          <h3 style= {{color:'#1e2a44', marginBottom:'10px'}}>Documentos Confidenciais de Nível 2</h3>
-          <ul style= {{ listStyleType:'none', paddingLeft:'0' }}>
-            <li style={{listItemStyle}}>Relatório Financeiro Q3-2025.pdf</li>
-            <li >Estratégia de Expansão Global.docx</li>
-            <li>Contrato de Parceria Secreta.pdf</li>
-            <li>Memo - Reunião do Conselho (15/10).txt</li>
+          <h3 style= {{color:'#1e2a44', marginBottom:'10px'}}>
+          <FaFolder style={{ marginRight: '8px', color: '#1e2a44' }} />
+          Documentos Confidenciais</h3>
+          <ul style= {{listStyleType:'none', paddingLeft:'0' }}>
+               {DOCUMENTS.map((doc, index) => (
+                   <li key={index} style={listItemStyle}>
+                   <span>{doc.nome}</span>
+                <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}
+                onClick= {() => handleView(doc)}
+                title={`Visualizar ${doc.nome}`}
+                />
+            </li>
+          ))}
           </ul>
-          <p style={{ fontSize: '0.8em', color: '#666' }}>Atenção: O compartilhamento destes documentos com terceiros é estritamente proibido.</p>
+
+          <p style={{ fontSize: '0.8em', color: '#c62828' }}>⚠️Atenção: O compartilhamento destes documentos com terceiros é estritamente proibido.</p>
+        </div>
+      )}
+      <Modal
+      isOpen={modalIsOpen}
+          onClose={handleClose}
+          document={docToView}
+                        />
       </div>
       )}
       
