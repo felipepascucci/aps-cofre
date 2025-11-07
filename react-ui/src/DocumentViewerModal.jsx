@@ -5,6 +5,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css'; 
 import 'react-pdf/dist/Page/TextLayer.css';
 
+// Configuração do worker do PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
@@ -55,7 +56,6 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
             style={modalStyle}
             contentLabel="Visualizador de Documento"
         >
-         
             <button 
                 onClick={onClose} 
                     style={{  
@@ -91,8 +91,22 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
                     </Document>
                 </div>
             ) : null}
-         
-
+            numPages && (
+                    <p style={{ 
+                        textAlign: 'center', 
+                        padding: '10px', 
+                        color: '#555', 
+                        borderTop: '1px solid #eee',
+                        position: 'absolute', // Define a posição em relação ao modal
+                        bottom: '0',        // Fica na parte inferior
+                        left: '0',
+                        right: '0',
+                        background: '#fff', // Fundo branco para garantir visibilidade
+                        zIndex: 9000
+                    }}>
+                        Visualizando {numPages} paginas
+                    </p>
+                )}
         </Modal>
     );
 }
