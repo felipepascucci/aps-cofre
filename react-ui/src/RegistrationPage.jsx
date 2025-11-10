@@ -122,8 +122,8 @@ function RegistrationPage() {
 
   return (
     <>
-      <h1>Administração</h1>
-      <div className="card-container">
+      <h1 style={{color:'#1565c0'}}>Administração</h1>
+      <div className="card-container" style={cardStyle}>
         {isLoggedIn ? (
           <>
             <h2>Cadastro de Novo Usuário</h2>
@@ -153,17 +153,16 @@ function RegistrationPage() {
         ) : (
 
           <>
-            <h2>Login de Administrador</h2>
-            <form onSubmit={handleLoginSubmit}>
-              <div><label>Usuário:</label><input type="text" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} required /></div>
-              <div><label>Senha:</label><input type="password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} required /></div>
-              <button type="submit">Entrar</button>
-              {loginError && (<p>{loginError}</p>)}
+            <h2 style={{color:'black'}}>Login de Administrador</h2>
+            <form onSubmit>
+              <div><label style={labelStyle}>👤Usuário:</label><input type="text" value={usernameInput} onChange={(e) => setUsernameInput(e.target.value)} required /></div>
+              <div style={inputGroupStyle}><label style={labelStyle}>🔒Senha:</label><input type="password" value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} required /></div>
+              <button type="submit" style={buttonStyle}>Entrar</button>
+              {loginError && (<p style={{color: 'red', marginTop: '10px'}}>{loginError}</p>)}
             </form>
           </>
         )}
       </div>
-
       {isModalOpen && (
         <div className="modal-backdrop">
           <div className="modal-content">

@@ -1,5 +1,15 @@
-import React from 'react';
+import React,{useState}  from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import {Eye, EyeOff, ArrowLeft} from 'lucide-react';
+import {FaEye} from 'react-icons/fa';
+import { FaFolder } from 'react-icons/fa';
+import { MdArrowBack } from 'react-icons/md';
+import { FaUserTie } from 'react-icons/fa';
+import DocumentViewerModal from './DocumentViewerModal';
+
+const DOCUMENTS = [
+    { nome: "Relatório", uri: "/docs/RELATORIO.pdf"},
+];
 
 function Level3Page() {
   const location = useLocation();
@@ -8,6 +18,16 @@ function Level3Page() {
   const toggleConfidential = () => {
       setShowConfidential(!showConfidential);
   };
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [docToView, setDocToView] = useState(null);
+  const handleView = (doc) => {
+        setDocToView(doc);
+        setModalIsOpen(true);
+    };
+  const handleClose = () => {
+        setModalIsOpen(false);
+        setDocToView(null);
+    };
   const listItemStyle = {
    display: 'flex',
    alignItems: 'center',
@@ -20,6 +40,7 @@ function Level3Page() {
    transition: '0.3s',
    color: '#1e2a44'
   };
+
   return(
     <div className="card-container" style={{ textAlign: 'center', backgroundColor: '#ffffff', marginTop: '40px'}}>
       <h1 style={{color: 'black'}}>Acesso Autorizado</h1>
@@ -28,7 +49,7 @@ function Level3Page() {
       </h1>
      <div className= "status status-allowed" style={{fontSize: '1.5em', backgroundColor: '#e3f2fd', color:'#1e2a44', display:'inline-block'}}>
      <FaUserTie style={{ marginRight: '10px' }} />
-            Acesso de Nivel 3 - Ministro concedido
+      Acesso de Nivel 3 - Ministro concedido
      </div>
      <button
         onClick={toggleConfidential}
@@ -60,7 +81,7 @@ function Level3Page() {
     
         )}
       </button>
-  
+
       {showConfidential && (
         <div style={{ 
           marginTop: '25px',
@@ -74,28 +95,30 @@ function Level3Page() {
           <FaFolder style={{ marginRight: '8px', color: '#1e2a44' }} />
           Documentos Confidenciais</h3>
           <ul style= {{listStyleType:'none', paddingLeft:'0' }}>
-            <li style={listItemStyle}>📄Relatório Financeiro Q3-2025.pdf
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Estratégia de Expansão Global.docx
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Contrato de Parceria Secreta.pdf
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-            <li style={listItemStyle}>📄Memo - Reunião do Conselho (15/10).txt
-            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}/>
-            </li>
-          </ul>
+               {DOCUMENTS.map((doc, index) => (
+                   <li key={index} style={listItemStyle}>
+                   <span>📄{doc.nome}</span>
+            <FaEye size={20} style={{ cursor: 'pointer', color: '#1565c0' }}
+            onClick={() => handleView(doc)}
+            title={`Visualizar ${doc.nome}`}
+            />
+           </li>
+           ))}
+        </ul>
+
           <p style={{ fontSize: '0.8em', color: '#c62828' }}>⚠️Atenção: O compartilhamento destes documentos com terceiros é estritamente proibido.</p>
-      </div>
+        </div>
       )}
-   
+      <DocumentViewerModal
+          isOpen={modalIsOpen}
+          onClose={handleClose}
+          document={docToView}
+      />
       <Link to="/" style={{ color: 'var(--text-light)', marginTop: '30px', display: 'inline-block', color: '#666'}}>
       <MdArrowBack style={{ marginRight: '5px' }} />
         Voltar para a Câmera
-      </Link>
-    </div>
-  );
+      </Link> 
+  </div>
+ );
 }
 export default Level3Page;
