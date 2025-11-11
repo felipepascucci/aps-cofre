@@ -6,3 +6,4 @@ face_recognition
 opencv-python
 python-multipart
 fastapi-cors
+locust
