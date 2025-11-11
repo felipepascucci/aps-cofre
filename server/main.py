@@ -81,7 +81,7 @@ async def reconhecer_rosto(arquivo_imagem: UploadFile = File(...), db: Session =
         distancias = face_recognition.face_distance(imagens_conhecidas_db, embedding_desconhecido)
         menor_distancia = np.min(distancias)
         
-        if menor_distancia <= 0.6:
+        if menor_distancia <= 0.5:
             acesso_permitido = True
             indice = np.argmin(distancias)
             nome_reconhecido = nomes_conhecidos_db[indice]
