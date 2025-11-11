@@ -1,16 +1,16 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 
 function ProtectedRoute({ children, requiredLevel }) {
-  const location = useLocation();
+  const location = useLocation()
 
-  const hasPermission = location.state?.authLevel === requiredLevel;
+  const hasPermission = location.state?.authLevel === requiredLevel
 
   if (!hasPermission) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" replace />
   }
 
-  return children;
+  return children
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute

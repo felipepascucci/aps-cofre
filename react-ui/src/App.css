@@ -346,3 +346,60 @@ p {
     align-items: center;
     gap: 15px;
 }
+
+.document-list-container {
+  margin-top: 25px;
+  background: #f8fafc;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+}
+
+.document-folder {
+  margin-bottom: 20px;
+}
+
+.folder-header {
+  color: #1e2a44;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-bottom: 2px solid #e0e6ed;
+  padding-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.document-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.document-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e0e6ed;
+  transition: 0.3s;
+  color: #1e2a44;
+}
+
+.document-name {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre o ícone e o nome */
+}
+
+.view-icon {
+  cursor: pointer;
+  color: #1565c0;
+  transition: transform 0.2s;
+}
+.view-icon:hover {
+  transform: scale(1.2);
+}

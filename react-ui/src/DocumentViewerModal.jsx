@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useRef} from 'react';
-import Modal from 'react-modal';
-import {X} from 'lucide-react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/Page/AnnotationLayer.css'; 
-import 'react-pdf/dist/Page/TextLayer.css';
+import React, {useState, useEffect, useRef} from 'react'
+import Modal from 'react-modal'
+import {X} from 'lucide-react'
+import { Document, Page, pdfjs } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import 'react-pdf/dist/Page/TextLayer.css'
 
 // Configura��o do worker do PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
   import.meta.url,
-).toString();
+).toString()
 
 const modalStyle = {
     content: { 
@@ -31,23 +31,23 @@ const modalStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
         zIndex: 1000 
     }
-};
+}
 
 function DocumentViewerModal({ isOpen, onClose, document }) {
-    const [numPages, setNumPages] = useState(null);
-    const [containerWidth, setContainerWidth] = useState(null); 
-    const containerRef = useRef(null);
+    const [numPages, setNumPages] = useState(null)
+    const [containerWidth, setContainerWidth] = useState(null)
+    const containerRef = useRef(null)
 
     useEffect(() => {
         if (isOpen && containerRef.current) {
             // Ajuste a largura, subtraindo um pouco das margens (ex: 20px)
-            setContainerWidth(containerRef.current.clientWidth - 20); 
+            setContainerWidth(containerRef.current.clientWidth - 20)
         }
-    }, [isOpen]);
+    }, [isOpen])
     
 
     function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
+        setNumPages(numPages)
     }
     const renderPage = (pageIndex) => (
         <Page 
@@ -57,7 +57,7 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
             renderTextLayer={true}
             width={containerWidth || 800}
         />
-    );
+    )
     
     return (
         <Modal
@@ -105,6 +105,6 @@ function DocumentViewerModal({ isOpen, onClose, document }) {
                 </div>
             ) : null}
         </Modal>
-    );
+    )
 }
-export default DocumentViewerModal;
+export default DocumentViewerModal

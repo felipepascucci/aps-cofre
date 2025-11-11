@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CamPage from './CamPage';
-import RegistrationPage from './RegistrationPage';
-import Level1Page from './Level1Page';
-import Level2Page from './Level2Page';
-import Level3Page from './Level3Page';
-import ProtectedRoute from './ProtectedRoute';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import CamPage from './CamPage'
+import RegistrationPage from './RegistrationPage'
+import Level1Page from './Level1Page'
+import Level2Page from './Level2Page'
+import Level3Page from './Level3Page'
+import ProtectedRoute from './ProtectedRoute'
+import './App.css'
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

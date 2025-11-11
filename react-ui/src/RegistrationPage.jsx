@@ -1,123 +1,123 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react'
 
 // --- Credenciais de Administrador (definidas no código) ---
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin";
+const ADMIN_USERNAME = "admin"
+const ADMIN_PASSWORD = "admin"
 
 function RegistrationPage() {
   // --- Estados para o formulário de CADASTRO ---
-  const [nome, setNome] = useState('');
-  const [nivel, setNivel] = useState('1');
-  const [foto, setFoto] = useState(null);
-  const [status, setStatus] = useState({ message: '', type: '' });
+  const [nome, setNome] = useState('')
+  const [nivel, setNivel] = useState('1')
+  const [foto, setFoto] = useState(null)
+  const [status, setStatus] = useState({ message: '', type: '' })
 
   // --- Estados para a tela de LOGIN ---
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [usernameInput, setUsernameInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [usernameInput, setUsernameInput] = useState('')
+  const [passwordInput, setPasswordInput] = useState('')
+  const [loginError, setLoginError] = useState('')
 
   // --- Estados e Refs para o MODAL DA CÂMERA ---
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const fileInputRef = useRef(null);
-  const modalVideoRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const fileInputRef = useRef(null)
+  const modalVideoRef = useRef(null)
 
   // Função para lidar com a submissão do formulário de LOGIN
   const handleLoginSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (usernameInput === ADMIN_USERNAME && passwordInput === ADMIN_PASSWORD) {
-      setIsLoggedIn(true);
-      setLoginError('');
-      setUsernameInput('');
-      setPasswordInput('');
+      setIsLoggedIn(true)
+      setLoginError('')
+      setUsernameInput('')
+      setPasswordInput('')
     } else {
-      setLoginError('Usuário ou senha inválidos.');
+      setLoginError('Usuário ou senha inválidos.')
     }
-  };
+  }
 
   // Função para lidar com a submissão do formulário de CADASTRO
   const handleRegistrationSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (!foto) {
-      alert('Por favor, selecione ou capture uma foto.');
-      return;
+      alert('Por favor, selecione ou capture uma foto.')
+      return
     }
 
-    const formData = new FormData();
-    formData.append('nome', nome);
-    formData.append('id_nivel_acesso', nivel);
-    formData.append('arquivo_imagem', foto);
+    const formData = new FormData()
+    formData.append('nome', nome)
+    formData.append('id_nivel_acesso', nivel)
+    formData.append('arquivo_imagem', foto)
 
-    setStatus({ message: 'Cadastrando, por favor aguarde...', type: 'checking' });
+    setStatus({ message: 'Cadastrando, por favor aguarde...', type: 'checking' })
 
     try {
       const response = await fetch('http://127.0.0.1:8000/usuarios', {
         method: 'POST',
         body: formData,
-      });
-      const result = await response.json();
+      })
+      const result = await response.json()
 
       if (response.ok) {
-        setStatus({ message: `Usuário "${result.nome}" cadastrado com sucesso!`, type: 'success' });
-        setNome('');
-        setNivel('1');
-        setFoto(null);
+        setStatus({ message: `Usuário "${result.nome}" cadastrado com sucesso!`, type: 'success' })
+        setNome('')
+        setNivel('1')
+        setFoto(null)
         if (fileInputRef.current) {
-          fileInputRef.current.value = null;
+          fileInputRef.current.value = null
         }
       } else {
-        setStatus({ message: `Erro: ${result.detail}`, type: 'error' });
+        setStatus({ message: `Erro: ${result.detail}`, type: 'error' })
       }
     } catch (error) {
-      console.error('Erro de conexão:', error);
-      setStatus({ message: 'Erro de conexão com o servidor.', type: 'error' });
+      console.error('Erro de conexão:', error)
+      setStatus({ message: 'Erro de conexão com o servidor.', type: 'error' })
     }
-  };
+  }
 
   // Função para remover o arquivo selecionado
   const handleRemoveFoto = () => {
-    setFoto(null);
+    setFoto(null)
     if (fileInputRef.current) {
-      fileInputRef.current.value = null;
+      fileInputRef.current.value = null
     }
-  };
+  }
 
   // Funções para controlar o MODAL DA CÂMERA
   const openCameraModal = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setIsModalOpen(true);
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      setIsModalOpen(true)
       setTimeout(() => {
         if (modalVideoRef.current) {
-          modalVideoRef.current.srcObject = stream;
+          modalVideoRef.current.srcObject = stream
         }
-      }, 100);
+      }, 100)
     } catch (err) {
-      console.error("Erro ao abrir a câmera no modal:", err);
-      alert("Não foi possível acessar a câmera. Verifique as permissões do navegador.");
+      console.error("Erro ao abrir a câmera no modal:", err)
+      alert("Não foi possível acessar a câmera. Verifique as permissões do navegador.")
     }
-  };
+  }
 
   const closeCameraModal = () => {
     if (modalVideoRef.current && modalVideoRef.current.srcObject) {
-      modalVideoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      modalVideoRef.current.srcObject.getTracks().forEach(track => track.stop())
     }
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const handleCapture = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = modalVideoRef.current.videoWidth;
-    canvas.height = modalVideoRef.current.videoHeight;
-    const context = canvas.getContext('2d');
-    context.drawImage(modalVideoRef.current, 0, 0, canvas.width, canvas.height);
+    const canvas = document.createElement('canvas')
+    canvas.width = modalVideoRef.current.videoWidth
+    canvas.height = modalVideoRef.current.videoHeight
+    const context = canvas.getContext('2d')
+    context.drawImage(modalVideoRef.current, 0, 0, canvas.width, canvas.height)
 
     canvas.toBlob((blob) => {
-      const capturedFile = new File([blob], "foto_capturada.jpg", { type: "image/jpeg" });
-      setFoto(capturedFile);
-      closeCameraModal();
-    }, 'image/jpeg');
-  };
+      const capturedFile = new File([blob], "foto_capturada.jpg", { type: "image/jpeg" })
+      setFoto(capturedFile)
+      closeCameraModal()
+    }, 'image/jpeg')
+  }
 
 
   return (
@@ -176,7 +176,7 @@ function RegistrationPage() {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default RegistrationPage;
+export default RegistrationPage
