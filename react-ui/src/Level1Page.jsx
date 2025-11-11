@@ -114,7 +114,7 @@ function Level1Page() {
           onClose={handleClose}
           document={docToView}
       />
-     <Link to="/" style={{ color: 'var(--text-light)', marginTop: '30px', display: 'inline-block', color: '#666'}}>
+     <Link to="/" style={{ color: 'var(--text-light)', marginTop: '30px', display: 'inline-block'}}>
       <MdArrowBack style={{ marginRight: '5px' }} />
         Voltar para a Câmera
       </Link> 
