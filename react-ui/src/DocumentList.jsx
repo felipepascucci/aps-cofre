@@ -22,9 +22,7 @@ function DocumentList({ userLevel }) {
     return grouped
   }, [userLevel])
 
-  // MUDANÇA: Função auxiliar para extrair o nome do arquivo da URI
   const getFilename = (uri) => {
-    // Pega a última parte da string após a última barra '/'
     return uri.split('/').pop()
   }
 
@@ -33,11 +31,9 @@ function DocumentList({ userLevel }) {
   }
 
   const handleView = (doc) => {
-    // MUDANÇA: Construímos o objeto 'doc' que o modal espera.
-    // O modal (DocumentViewerModal) provavelmente espera uma propriedade 'name'.
     setDocToView({
-      ...doc, // Passa a 'uri' e 'level' originais
-      name: getFilename(doc.uri) // Adiciona a propriedade 'name' calculada
+      ...doc,
+      name: getFilename(doc.uri) 
     })
     setModalIsOpen(true)
   }
@@ -80,13 +76,12 @@ function DocumentList({ userLevel }) {
                   <li key={doc.uri} className="document-list-item">
                     <span className="document-name">
                       <FaFilePdf style={{ color: 'var(--denied-color)'}} />
-                      {/* MUDANÇA: Exibe o nome do arquivo extraído da URI */}
                       {getFilename(doc.uri)}
                     </span>
                     <FaEye
                       size={20}
                       className="view-icon"
-                      onClick={() => handleView(doc)} // Passa o 'doc' {uri, level}
+                      onClick={() => handleView(doc)}
                       title={`Visualizar ${getFilename(doc.uri)}`}
                     />
                   </li>
@@ -111,3 +106,9 @@ function DocumentList({ userLevel }) {
 }
 
 export default DocumentList
+
+
+
+
+
+

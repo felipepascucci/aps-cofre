@@ -19,7 +19,6 @@ function Level3Page() {
         Acesso de Nível 3 - Ministro concedido
       </div>
       
-      {/* Passa o nível 3, que mostrará as pastas 1, 2 e 3 */}
       <DocumentList userLevel={3} />
       
       <Link to="/" style={{ color: '#1565c0', marginTop: '30px', display: 'inline-block', textDecoration: 'none', fontWeight: 'bold' }}>
